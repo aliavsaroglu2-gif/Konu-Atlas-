@@ -17,7 +17,7 @@
             min-height: 297mm;
             margin: 0 auto;
             background: #ffffff;
-            padding: 12mm;
+            padding: 8mm;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
@@ -29,17 +29,39 @@
         .fit-page .track-table td, .fit-page .track-table th { padding: 4px 8px !important; font-size: 8.5pt !important; }
         .fit-page .plan-table td { min-height: 45px !important; font-size: 8.5pt !important; }
 
+
+        /* Akıllı kolon genişliği (Konu vs Ödev/Kaynak Notu) */
+        :root{
+            --w-track-1: 20%;
+            --w-track-2: 45%;
+            --w-track-3: 30%;
+            --w-track-4: 5%;
+        }
+        .track-table col.col-1{ width: var(--w-track-1); }
+        .track-table col.col-2{ width: var(--w-track-2); }
+        .track-table col.col-3{ width: var(--w-track-3); }
+        .track-table col.col-4{ width: var(--w-track-4); }
+
         .track-table, .plan-table { table-layout: fixed; width: 100%; border-collapse: collapse; margin-bottom: 15px; }
         .track-table th, .track-table td, .plan-table th, .plan-table td { 
-            border: 1px solid #cbd5e1; padding: 10px; vertical-align: top; word-wrap: break-word; line-height: 1.3; font-size: 9.5pt; 
+            border: 1px solid #cbd5e1; padding: 10px; vertical-align: top; word-wrap: break-word; line-height: 1.3; font-size: 8.5pt; 
         }
-        .plan-table td { white-space: pre-wrap; min-height: 70px; }
+        .plan-table td { white-space: pre-wrap; min-height: 45px; }
         .track-table th, .plan-table th { background: #f8fafc; font-size: 8pt; font-weight: 800; color: #475569; text-transform: uppercase; }
 
         .badge-tyt { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; padding: 2px 5px; border-radius: 4px; font-weight: 800; font-size: 7pt; }
         .badge-ayt { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 2px 5px; border-radius: 4px; font-weight: 800; font-size: 7pt; }
 
         @media print { .no-print-item { display: none !important; } }
+
+/* EXTRA SIKISTIRMA – Sayfaya Sığdır */
+.fit-page #pdf-render-area { padding: 5mm !important; }
+.fit-page .track-table td,
+.fit-page .track-table th { padding: 3px 5px !important; font-size: 7.5pt !important; }
+.fit-page .plan-table td { min-height: 32px !important; font-size: 7.5pt !important; }
+.fit-page h1 { font-size: 13pt !important; }
+.fit-page h3 { font-size: 7pt !important; }
+
     
         /* Haftalık görevler: 4'e kadar tek sütun, 5+ olduğunda JS iki sütun render eder */
         .task-area{ display:flex; flex-direction:column-reverse; gap:0.5rem; }
@@ -124,12 +146,18 @@
 
                 <div id="viewTrack">
                     <table class="track-table">
-                        <thead>
+                        <colgroup>
+                            <col class="col-1">
+                            <col class="col-2">
+                            <col class="col-3">
+                            <col class="col-4">
+                        </colgroup>
+<thead>
                             <tr>
-                                <th style="width: 20%">Sınav/Ders</th>
-                                <th style="width: 50%">Branş / Konu</th>
-                                <th style="width: 25%">Ödev / Kaynak Notu</th>
-                                <th class="no-print-item" style="width: 5%"></th>
+                                <th>Sınav/Ders</th>
+                                <th>Branş / Konu</th>
+                                <th>Ödev / Kaynak Notu</th>
+                                <th class="no-print-item"></th>
                             </tr>
                         </thead>
                         <tbody id="outTable"></tbody>
@@ -202,12 +230,12 @@
                 "Matematik": ["Fonksiyonlar", "Polinomlar", "2.Dereceden Denklemler", "Permütasyon ve Kombinasyon", "Binom ve Olasılık", "Karmaşık Sayılar", "2.Dereceden Eşitsizlikler", "Parabol", "Trigonometri", "Logaritma", "Diziler", "Limit", "Türev", "İntegral", "AYT Matematik Genel Tekrar"],
                 "Geometri": GEOMETRI,
                 "Edebiyat": ["Anlam Bilgisi", "Dil Bilgisi", "Güzel Sanatlar ve Edebiyat", "Metinlerin Sınıflandırılması", "Şiir Bilgisi", "Edebi Sanatlar", "Türk Edebiyatı Dönemleri", "İslamiyet Öncesi ve Geçiş Dönemi", "Halk Edebiyatı", "Divan Edebiyatı", "Tanzimat Edebiyatı", "Servet-i Fünun Edebiyatı", "Fecr-i Ati Edebiyatı", "Milli Edebiyat", "Cumhuriyet Dönemi Edebiyatı", "Edebiyat Akımları", "Dünya Edebiyatı", "Edebiyat Genel Tekrar"],
-                "Fizik": ["Vektörler", "Kuvvet, Tork ve Denge", "Kütle Merkezi", "Basit Makineler", "Hareket", "Newton’un Hareket Yasaları", "İş, Güç ve Enerji II", "Atışlar", "İtme ve Momentum", "Elektrik Alan ve Potansiyel", "Paralel Levhalar ve Sığa", "Manyetik Alan ve Manyetik Kuvvet", "İndüksiyon, Alternatif Akım ve Transformatörler", "Çembersel Hareket", "Dönme, Yuvarlanma ve Açısal Momentum", "Kütle Çekim ve Kepler Yasaları", "Basit Harmonik Hareket", "Dalga Mekaniği ve Elektromanyetik Dalgalar", "Atom Modelleri", "Büyük Patlama ve Parçacık Fiziği", "Radyoaktivite", "Özel Görelilik", "Kara Cisim Işıması", "Fotoelektrik Olay ve Compton Olayı", "Modern Fiziğin Teknolojideki Uygulamaları", "Fizik Genel Tekrar",
+                "Fizik": ["Vektörler", "Kuvvet, Tork ve Denge", "Kütle Merkezi", "Basit Makineler", "Hareket", "Newton’un Hareket Yasaları", "İş, Güç ve Enerji II", "Atışlar", "İtme ve Momentum", "Elektrik Alan ve Potansiyel", "Paralel Levhalar ve Sığa", "Manyetik Alan ve Manyetik Kuvvet", "İndüksiyon, Alternatif Akım ve Transformatörler", "Çembersel Hareket", "Dönme, Yuvarlanma ve Açısal Momentum", "Kütle Çekim ve Kepler Yasaları", "Basit Harmonik Hareket", "Dalga Mekaniği ve Elektromanyetik Dalgalar", "Atom Modelleri", "Büyük Patlama ve Parçacık Fiziği", "Radyoaktivite", "Özel Görelilik", "Kara Cisim Işıması", "Fotoelektrik Olay ve Compton Olayı", "Modern Fiziğin Teknolojideki Uygulamaları", "AYT Fizik Genel Tekrar",
 ],
-                "Kimya": ["Modern Atom Teorisi", "Gazlar", "Sıvı Çözeltiler", "Kimyasal Tepkimelerde Enerji", "Kimyasal Tepkimelerde Hız", "Kimyasal Tepkimelerde Denge", "Asit-Baz Dengesi", "Çözünürlük Dengesi", "Kimya ve Elektrik", "Karbon Kimyasına Giriş", "Organik Kimya", "Kimya Genel Tekrar"],
-                "Biyoloji": ["Sinir Sistemi", "Endokrin Sistem ve Hormonlar", "Duyu Organları", "Destek ve Hareket Sistemi", "Sindirim Sistemi", "Dolaşım ve Bağışıklık Sistemi", "Solunum Sistemi", "Üriner Sistem (Boşaltım Sistemi)", "Üreme Sistemi ve Embriyonik Gelişim", "Sistemler Genel Tekrar", "Komünite Ekolojisi", "Popülasyon Ekolojisi", "Genden Proteine", "Nükleik Asitler", "Genetik Şifre ve Protein Sentezi", "Canlılarda Enerji Dönüşümleri", "Canlılık ve Enerji", "Fotosentez", "Kemosentez", "Hücresel Solunum", "Bitki Biyolojisi", "Canlılar ve Çevre", "Biyoloji Genel Tekrar"],
+                "Kimya": ["Modern Atom Teorisi", "Gazlar", "Sıvı Çözeltiler", "Kimyasal Tepkimelerde Enerji", "Kimyasal Tepkimelerde Hız", "Kimyasal Tepkimelerde Denge", "Asit-Baz Dengesi", "Çözünürlük Dengesi", "Kimya ve Elektrik", "Karbon Kimyasına Giriş", "Organik Kimya", "AYT Kimya Genel Tekrar"],
+                "Biyoloji": ["Sinir Sistemi", "Endokrin Sistem ve Hormonlar", "Duyu Organları", "Destek ve Hareket Sistemi", "Sindirim Sistemi", "Dolaşım ve Bağışıklık Sistemi", "Solunum Sistemi", "Üriner Sistem (Boşaltım Sistemi)", "Üreme Sistemi ve Embriyonik Gelişim", "Sistemler Genel Tekrar", "Komünite Ekolojisi", "Popülasyon Ekolojisi", "Genden Proteine", "Nükleik Asitler", "Genetik Şifre ve Protein Sentezi", "Canlılarda Enerji Dönüşümleri", "Canlılık ve Enerji", "Fotosentez", "Kemosentez", "Hücresel Solunum", "Bitki Biyolojisi", "Canlılar ve Çevre", "AYT Biyoloji Genel Tekrar"],
                 "Tarih": TARİH_ORTAK,
-                "Coğrafya": ["Ekosistem", "Biyoçeşitlilik", "Biyomlar", "Ekosistemin Unsurları", "Enerji Akışı ve Madde Döngüsü", "Ekstrem Doğa Olayları", "Küresel İklim Değişimi", "Nüfus Politikaları", "Türkiye’de Nüfus ve Yerleşme", "Ekonomik Faaliyetler ve Doğal Kaynaklar", "Göç ve Şehirleşme", "Türkiye Ekonomisi", "Türkiye’nin Ekonomi Politikaları", "Türkiye Ekonomisinin Sektörel Dağılımı", "Türkiye’de Tarım", "Türkiye’de Hayvancılık", "Türkiye’de Madenler ve Enerji Kaynakları", "Türkiye’de Sanayi", "Türkiye’de Ulaşım", "Türkiye’de Ticaret ve Turizm", "Geçmişten Geleceğe Şehir ve Ekonomi", "Türkiye’nin İşlevsel Bölgeleri ve Kalkınma Projeleri", "Hizmet Sektörünün Ekonomideki Yeri", "Küresel Ticaret", "Bölgeler ve Ülkeler", "İlk Uygarlıklar", "Kültür Bölgeleri ve Türk Kültürü", "Sanayileşme Süreci: Almanya", "Tarım ve Ekonomi İlişkisi Fransa – Somali", "Ülkeler Arası Etkileşim", "Jeopolitik Konum", "Çatışma Bölgeleri", "Küresel ve Bölgesel Örgütler", "Çevre ve Toplum", "Çevre Sorunları ve Türleri", "Madenler ve Enerji Kaynaklarının Çevreye Etkisi", "Doğal Kaynakların Sürdürülebilir Kullanımı", "Ekolojik Ayak İzi", "Doğal Çevrenin Sınırlılığı", "Çevre Politikaları", "Çevresel Örgütler", "Çevre Anlaşmaları", "Doğal Afetler", "Coğrafya Genel Tekrar"]
+                "Coğrafya": ["Ekosistem", "Biyoçeşitlilik", "Biyomlar", "Ekosistemin Unsurları", "Enerji Akışı ve Madde Döngüsü", "Ekstrem Doğa Olayları", "Küresel İklim Değişimi", "Nüfus Politikaları", "Türkiye’de Nüfus ve Yerleşme", "Ekonomik Faaliyetler ve Doğal Kaynaklar", "Göç ve Şehirleşme", "Türkiye Ekonomisi", "Türkiye’nin Ekonomi Politikaları", "Türkiye Ekonomisinin Sektörel Dağılımı", "Türkiye’de Tarım", "Türkiye’de Hayvancılık", "Türkiye’de Madenler ve Enerji Kaynakları", "Türkiye’de Sanayi", "Türkiye’de Ulaşım", "Türkiye’de Ticaret ve Turizm", "Geçmişten Geleceğe Şehir ve Ekonomi", "Türkiye’nin İşlevsel Bölgeleri ve Kalkınma Projeleri", "Hizmet Sektörünün Ekonomideki Yeri", "Küresel Ticaret", "Bölgeler ve Ülkeler", "İlk Uygarlıklar", "Kültür Bölgeleri ve Türk Kültürü", "Sanayileşme Süreci: Almanya", "Tarım ve Ekonomi İlişkisi Fransa – Somali", "Ülkeler Arası Etkileşim", "Jeopolitik Konum", "Çatışma Bölgeleri", "Küresel ve Bölgesel Örgütler", "Çevre ve Toplum", "Çevre Sorunları ve Türleri", "Madenler ve Enerji Kaynaklarının Çevreye Etkisi", "Doğal Kaynakların Sürdürülebilir Kullanımı", "Ekolojik Ayak İzi", "Doğal Çevrenin Sınırlılığı", "Çevre Politikaları", "Çevresel Örgütler", "Çevre Anlaşmaları", "Doğal Afetler", "AYT Coğrafya Genel Tekrar"]
             }
         };
 
@@ -318,6 +346,34 @@
                 `;
                 table.appendChild(tr);
             });
+
+
+            // Kolon genişliğini içerik uzunluğuna göre akıllı ayarla
+            // Mantık: Konu kısa, Kaynak uzunsa Kaynak kolonu genişlesin; tersi durumda konu biraz genişlesin.
+            const maxLenKonu = Math.max(1, ...allRows.map(x => (x.konu || '').length));
+            const maxLenKaynak = Math.max(1, ...allRows.map(x => (x.kaynak || '').length));
+
+            // Sabit kolonlar: 1=20%, 4=5% -> kalan 75% (2 ve 3 paylaşacak)
+            const base1 = 20, base4 = 5, remaining = 75;
+
+            // fark oranı (-1..+1)
+            const diff = (maxLenKaynak - maxLenKonu) / (maxLenKaynak + maxLenKonu);
+
+            // Kaynak payı: 0.50 merkezli, +/- 0.18 oynasın (çok uçlara gitmesin)
+            let shareKaynak = 0.50 + (0.18 * diff);
+
+            // Min/Max sınır (Kaynak kolonu çok dar/çok geniş olmasın)
+            shareKaynak = Math.max(0.38, Math.min(0.62, shareKaynak));
+
+            const w3 = remaining * shareKaynak;      // Ödev/Kaynak
+            const w2 = remaining - w3;               // Branş/Konu
+
+            document.documentElement.style.setProperty('--w-track-1', base1 + '%');
+            document.documentElement.style.setProperty('--w-track-4', base4 + '%');
+            document.documentElement.style.setProperty('--w-track-2', w2.toFixed(2) + '%');
+            document.documentElement.style.setProperty('--w-track-3', w3.toFixed(2) + '%');
+
+
 
             const outTasks = document.getElementById('outTasks'); outTasks.innerHTML = "";
             const outQrs = document.getElementById('outQrs'); outQrs.innerHTML = "";
