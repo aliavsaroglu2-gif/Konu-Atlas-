@@ -52,7 +52,14 @@
         .badge-tyt { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; padding: 2px 5px; border-radius: 4px; font-weight: 800; font-size: 7pt; }
         .badge-ayt { background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; padding: 2px 5px; border-radius: 4px; font-weight: 800; font-size: 7pt; }
 
-        @media print { .no-print-item { display: none !important; } }
+        
+        .badge-grade { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; padding: 2px 5px; border-radius: 4px; font-weight: 800; font-size: 7pt; }
+
+
+        .badge-9 { background:#eef2ff; color:#3730a3; border:1px solid #c7d2fe; padding:2px 5px; border-radius:4px; font-weight:800; font-size:7pt; }
+        .badge-10 { background:#ecfeff; color:#155e75; border:1px solid #67e8f9; padding:2px 5px; border-radius:4px; font-weight:800; font-size:7pt; }
+        .badge-11 { background:#fff7ed; color:#9a3412; border:1px solid #fed7aa; padding:2px 5px; border-radius:4px; font-weight:800; font-size:7pt; }
+@media print { .no-print-item { display: none !important; } }
 
 /* EXTRA SIKISTIRMA – Sayfaya Sığdır */
 .fit-page #pdf-render-area { padding: 5mm !important; }
@@ -89,9 +96,14 @@
                 </div>
 
                 <div id="tabTAKIP" class="space-y-4">
-                    <div class="flex gap-2">
+                    <div class="flex gap-2 flex-wrap">
                          <button onclick="toggleExam('TYT')" id="subTYT" class="flex-1 py-2 rounded-lg bg-blue-600 text-white text-[10px] font-bold">TYT</button>
                          <button onclick="toggleExam('AYT')" id="subAYT" class="flex-1 py-2 rounded-lg bg-slate-200 text-slate-600 text-[10px] font-bold">AYT</button>
+
+      <button onclick="toggleExam('9')" id="sub9" class="flex-1 py-2 rounded-lg bg-slate-200 text-slate-600 text-[10px] font-bold">9. Sınıf</button>
+      <button onclick="toggleExam('10')" id="sub10" class="flex-1 py-2 rounded-lg bg-slate-200 text-slate-600 text-[10px] font-bold">10. Sınıf</button>
+      <button onclick="toggleExam('11')" id="sub11" class="flex-1 py-2 rounded-lg bg-slate-200 text-slate-600 text-[10px] font-bold">11. Sınıf</button>
+</button>
                     </div>
                     <select id="inDers" onchange="updateKonuOptions()" class="w-full rounded-2xl p-4 bg-slate-50 ring-1 ring-slate-200 outline-none"></select>
                     <select id="inKonu" class="w-full rounded-2xl p-4 bg-slate-50 ring-1 ring-slate-200 outline-none"></select>
@@ -135,8 +147,7 @@
                 <div class="flex justify-between items-start border-b-2 border-slate-100 pb-3 mb-4">
                     <div>
                         <h1 class="text-xl font-black text-slate-900 tracking-tighter uppercase italic">Konu Atlası <span class="text-blue-600">Academic</span></h1>
-                        <p class="text-slate-400 font-bold uppercase tracking-[0.2em] text-[7px]">Academic Monitoring - Bu Uygulama Uzm. Psk. Dan. Ali AVŞAROĞLU 
-                            tarafından sadece REHBER ÖĞRETMENLER İÇİN geliştirilmiştir.</p>
+                        <p class="text-slate-400 font-bold uppercase tracking-[0.2em] text-[7px]">Academic Monitoring - Uzm. Psk. Dan. Ali AVŞAROĞLU</p>
                     </div>
                     <div class="text-right">
                         <p class="font-bold text-lg text-slate-900" id="outStudent">Öğrenci Adı</p>
@@ -211,7 +222,7 @@
 
     <script>
         // DATA VE DİĞER JS FONKSİYONLARI (Öncekiyle aynı, sadece updatePreview güncellendi)
-        const DERS_IKONLARI = { "Matematik": "📐", "Geometri": "📏", "Fizik": "⚛️", "Kimya": "🧪", "Biyoloji": "🧬", "Türkçe": "📚", "Tarih": "📜", "Coğrafya": "🌍", "Edebiyat": "🖋️" };
+        const DERS_IKONLARI = { "Matematik": "📐", "Geometri": "📏", "Fizik": "⚛️", "Kimya": "🧪", "Biyoloji": "🧬", "Türkçe": "📚", "Tarih": "📜", "Coğrafya": "🌍", "Edebiyat": "🖋️", "Türk Dili ve Edebiyatı": "📖", "Din Kültürü ve Ahlak Bilgisi": "🕌", "Felsefe": "🤔", "İngilizce": "🇬🇧", "Almanca": "🇩🇪", "Astronomi ve Uzay Bilimleri": "🪐" };
         const GEOMETRI = ["Doğruda Açılar", "Üçgende Açılar", "Özel Üçgenler", "Dik Üçgen", "İkizkenar Üçgen", "Eşkenar Üçgen", "Açıortay", "Kenarortay", "Eşlik ve Benzerlik", "Üçgende Alan", "Üçgende Benzerlik", "Açı Kenar Bağıntıları", "Çokgenler", "Özel Dörtgenler", "Dörtgenler", "Deltoid", "Paralelkenar", "Eşkenar Dörtgen", "Dikdörtgen", "Kare", "Yamuk", "Çember ve Daire", "Çemberde Açı", "Çemberde Uzunluk", "Dairede Çevre ve Alan", "Analitik Geometri", "Noktanın Analitiği", "Doğrunun Analitiği", "Dönüşüm Geometrisi", "Çemberin Analitiği", "Katı Cisimler", "Prizmalar", "Küp", "Silindir", "Piramit", "Koni", "Küre", "Geometri Genel Tekrar"];
         const TARİH_ORTAK = ["Tarih ve Zaman", "İnsanlığın İlk Dönemleri", "İlk ve Orta Çağlarda Türk Dünyası", "İslam Medeniyetinin Doğuşu ve İlk İslam Devletleri", "Türklerin İslamiyet’i Kabulü ve İlk Türk İslam Devletleri", "Orta Çağ’da Dünya", "Selçuklu Türkiyesi", "Osmanlı Siyaseti", "Devletleşme Sürecinde Savaşçılar", "Beylikten Devlete Osmanlı Medeniyeti", "Dünya Gücü Osmanlı", "Sultan ve Osmanlı Merkez Teşkilatı", "Klasik Çağda Osmanlı Toplum Düzeni", "Değişen Dünya Dengeleri", "Değişim Çağında Avrupa ve Osmanlı", "Uluslararası İlişkilerde Denge Stratejisi", "Devrimler Çağında Devlet-Toplum", "Sermaye ve Emek", "XIX. ve XX. Yüzyılda Gündelik Hayat", "XX. Yüzyıl Başlarında Osmanlı ve Dünya", "Milli Mücadele", "Atatürkçülük ve Türk İnkılabı", "Tarih Genel Tekrar"];
 
@@ -231,12 +242,467 @@
                 "Matematik": ["Fonksiyonlar", "Polinomlar", "2.Dereceden Denklemler", "Permütasyon ve Kombinasyon", "Binom ve Olasılık", "Karmaşık Sayılar", "2.Dereceden Eşitsizlikler", "Parabol", "Trigonometri", "Logaritma", "Diziler", "Limit", "Türev", "İntegral", "AYT Matematik Genel Tekrar"],
                 "Geometri": GEOMETRI,
                 "Edebiyat": ["Anlam Bilgisi", "Dil Bilgisi", "Güzel Sanatlar ve Edebiyat", "Metinlerin Sınıflandırılması", "Şiir Bilgisi", "Edebi Sanatlar", "Türk Edebiyatı Dönemleri", "İslamiyet Öncesi ve Geçiş Dönemi", "Halk Edebiyatı", "Divan Edebiyatı", "Tanzimat Edebiyatı", "Servet-i Fünun Edebiyatı", "Fecr-i Ati Edebiyatı", "Milli Edebiyat", "Cumhuriyet Dönemi Edebiyatı", "Edebiyat Akımları", "Dünya Edebiyatı", "Edebiyat Genel Tekrar"],
-                "Fizik": ["Vektörler", "Kuvvet, Tork ve Denge", "Kütle Merkezi", "Basit Makineler", "Hareket", "Newton’un Hareket Yasaları", "İş, Güç ve Enerji II", "Atışlar", "İtme ve Momentum", "Elektrik Alan ve Potansiyel", "Paralel Levhalar ve Sığa", "Manyetik Alan ve Manyetik Kuvvet", "İndüksiyon, Alternatif Akım ve Transformatörler", "Çembersel Hareket", "Dönme, Yuvarlanma ve Açısal Momentum", "Kütle Çekim ve Kepler Yasaları", "Basit Harmonik Hareket", "Dalga Mekaniği ve Elektromanyetik Dalgalar", "Atom Modelleri", "Büyük Patlama ve Parçacık Fiziği", "Radyoaktivite", "Özel Görelilik", "Kara Cisim Işıması", "Fotoelektrik Olay ve Compton Olayı", "Modern Fiziğin Teknolojideki Uygulamaları", "AYT Fizik Genel Tekrar",
+                "Fizik": ["Vektörler", "Kuvvet, Tork ve Denge", "Kütle Merkezi", "Basit Makineler", "Hareket", "Newton’un Hareket Yasaları", "İş, Güç ve Enerji II", "Atışlar", "İtme ve Momentum", "Elektrik Alan ve Potansiyel", "Paralel Levhalar ve Sığa", "Manyetik Alan ve Manyetik Kuvvet", "İndüksiyon, Alternatif Akım ve Transformatörler", "Çembersel Hareket", "Dönme, Yuvarlanma ve Açısal Momentum", "Kütle Çekim ve Kepler Yasaları", "Basit Harmonik Hareket", "Dalga Mekaniği ve Elektromanyetik Dalgalar", "Atom Modelleri", "Büyük Patlama ve Parçacık Fiziği", "Radyoaktivite", "Özel Görelilik", "Kara Cisim Işıması", "Fotoelektrik Olay ve Compton Olayı", "Modern Fiziğin Teknolojideki Uygulamaları", "Fizik Genel Tekrar",
 ],
-                "Kimya": ["Modern Atom Teorisi", "Gazlar", "Sıvı Çözeltiler", "Kimyasal Tepkimelerde Enerji", "Kimyasal Tepkimelerde Hız", "Kimyasal Tepkimelerde Denge", "Asit-Baz Dengesi", "Çözünürlük Dengesi", "Kimya ve Elektrik", "Karbon Kimyasına Giriş", "Organik Kimya", "AYT Kimya Genel Tekrar"],
-                "Biyoloji": ["Sinir Sistemi", "Endokrin Sistem ve Hormonlar", "Duyu Organları", "Destek ve Hareket Sistemi", "Sindirim Sistemi", "Dolaşım ve Bağışıklık Sistemi", "Solunum Sistemi", "Üriner Sistem (Boşaltım Sistemi)", "Üreme Sistemi ve Embriyonik Gelişim", "Sistemler Genel Tekrar", "Komünite Ekolojisi", "Popülasyon Ekolojisi", "Genden Proteine", "Nükleik Asitler", "Genetik Şifre ve Protein Sentezi", "Canlılarda Enerji Dönüşümleri", "Canlılık ve Enerji", "Fotosentez", "Kemosentez", "Hücresel Solunum", "Bitki Biyolojisi", "Canlılar ve Çevre", "AYT Biyoloji Genel Tekrar"],
+                "Kimya": ["Modern Atom Teorisi", "Gazlar", "Sıvı Çözeltiler", "Kimyasal Tepkimelerde Enerji", "Kimyasal Tepkimelerde Hız", "Kimyasal Tepkimelerde Denge", "Asit-Baz Dengesi", "Çözünürlük Dengesi", "Kimya ve Elektrik", "Karbon Kimyasına Giriş", "Organik Kimya", "Kimya Genel Tekrar"],
+                "Biyoloji": ["Sinir Sistemi", "Endokrin Sistem ve Hormonlar", "Duyu Organları", "Destek ve Hareket Sistemi", "Sindirim Sistemi", "Dolaşım ve Bağışıklık Sistemi", "Solunum Sistemi", "Üriner Sistem (Boşaltım Sistemi)", "Üreme Sistemi ve Embriyonik Gelişim", "Sistemler Genel Tekrar", "Komünite Ekolojisi", "Popülasyon Ekolojisi", "Genden Proteine", "Nükleik Asitler", "Genetik Şifre ve Protein Sentezi", "Canlılarda Enerji Dönüşümleri", "Canlılık ve Enerji", "Fotosentez", "Kemosentez", "Hücresel Solunum", "Bitki Biyolojisi", "Canlılar ve Çevre", "Biyoloji Genel Tekrar"],
                 "Tarih": TARİH_ORTAK,
-                "Coğrafya": ["Ekosistem", "Biyoçeşitlilik", "Biyomlar", "Ekosistemin Unsurları", "Enerji Akışı ve Madde Döngüsü", "Ekstrem Doğa Olayları", "Küresel İklim Değişimi", "Nüfus Politikaları", "Türkiye’de Nüfus ve Yerleşme", "Ekonomik Faaliyetler ve Doğal Kaynaklar", "Göç ve Şehirleşme", "Türkiye Ekonomisi", "Türkiye’nin Ekonomi Politikaları", "Türkiye Ekonomisinin Sektörel Dağılımı", "Türkiye’de Tarım", "Türkiye’de Hayvancılık", "Türkiye’de Madenler ve Enerji Kaynakları", "Türkiye’de Sanayi", "Türkiye’de Ulaşım", "Türkiye’de Ticaret ve Turizm", "Geçmişten Geleceğe Şehir ve Ekonomi", "Türkiye’nin İşlevsel Bölgeleri ve Kalkınma Projeleri", "Hizmet Sektörünün Ekonomideki Yeri", "Küresel Ticaret", "Bölgeler ve Ülkeler", "İlk Uygarlıklar", "Kültür Bölgeleri ve Türk Kültürü", "Sanayileşme Süreci: Almanya", "Tarım ve Ekonomi İlişkisi Fransa – Somali", "Ülkeler Arası Etkileşim", "Jeopolitik Konum", "Çatışma Bölgeleri", "Küresel ve Bölgesel Örgütler", "Çevre ve Toplum", "Çevre Sorunları ve Türleri", "Madenler ve Enerji Kaynaklarının Çevreye Etkisi", "Doğal Kaynakların Sürdürülebilir Kullanımı", "Ekolojik Ayak İzi", "Doğal Çevrenin Sınırlılığı", "Çevre Politikaları", "Çevresel Örgütler", "Çevre Anlaşmaları", "Doğal Afetler", "AYT Coğrafya Genel Tekrar"]
+                "Coğrafya": ["Ekosistem", "Biyoçeşitlilik", "Biyomlar", "Ekosistemin Unsurları", "Enerji Akışı ve Madde Döngüsü", "Ekstrem Doğa Olayları", "Küresel İklim Değişimi", "Nüfus Politikaları", "Türkiye’de Nüfus ve Yerleşme", "Ekonomik Faaliyetler ve Doğal Kaynaklar", "Göç ve Şehirleşme", "Türkiye Ekonomisi", "Türkiye’nin Ekonomi Politikaları", "Türkiye Ekonomisinin Sektörel Dağılımı", "Türkiye’de Tarım", "Türkiye’de Hayvancılık", "Türkiye’de Madenler ve Enerji Kaynakları", "Türkiye’de Sanayi", "Türkiye’de Ulaşım", "Türkiye’de Ticaret ve Turizm", "Geçmişten Geleceğe Şehir ve Ekonomi", "Türkiye’nin İşlevsel Bölgeleri ve Kalkınma Projeleri", "Hizmet Sektörünün Ekonomideki Yeri", "Küresel Ticaret", "Bölgeler ve Ülkeler", "İlk Uygarlıklar", "Kültür Bölgeleri ve Türk Kültürü", "Sanayileşme Süreci: Almanya", "Tarım ve Ekonomi İlişkisi Fransa – Somali", "Ülkeler Arası Etkileşim", "Jeopolitik Konum", "Çatışma Bölgeleri", "Küresel ve Bölgesel Örgütler", "Çevre ve Toplum", "Çevre Sorunları ve Türleri", "Madenler ve Enerji Kaynaklarının Çevreye Etkisi", "Doğal Kaynakların Sürdürülebilir Kullanımı", "Ekolojik Ayak İzi", "Doğal Çevrenin Sınırlılığı", "Çevre Politikaları", "Çevresel Örgütler", "Çevre Anlaşmaları", "Doğal Afetler", "Coğrafya Genel Tekrar"]
+            }
+        ,
+            "9":             {
+                "Matematik": [
+                    "Sayılar", "Üslü ve Köklü Sayılar","Gerçek Sayı Aralıkları ile Yapılan İşlemler","Sayı Kümeleri ve İşlem Özellikleri", "Nicelikler ve Değişimler", "İki Kare Farkı ve Tamkare Özdeşlikleri","Doğrusal ve Mutlak Değer Fonksiyonları","Doğrusal Fonksiyonlarla İfade Edilen Denklem ve Eşitsizlikler","Algoritma Temelli Problemler","Mantık Bağlaçları ve Niceleyiciler", "Geometri", "Geometrik Dönüşümler","Üçgenlerde Eşlik ve Benzerlik","İstatistiksel Araştırma Süreci", "Tek Nicel Değişkenle İstatistiksel Analiz","İstatistiksel Görsel ve Yorumlama", "Veriden Olasılığa", "Deneysel ve Teorik Olasılık","Olayların Deneysel ve Teorik Olasılığını İlişkilendirme","Üçgende Açı ve Kenar Özellikleri"
+                ],
+
+                "Fizik": [
+                   "Fizik Bilimi ve Kariyer Keşfi", "Fizik Bilimi","Fizik Biliminin Alt Dalları","Fizik Bilimine Yön Verenler","Fizik Bilimi ile İlgili Kariyer Keşfi", "Kuvvet ve Hareket",  "Temel ve Türetilmiş Nicelikler","Skaler ve Vektörel Nicelikler","Vektörler","Doğadaki Temel Kuvvetler","Hareket ve Hareket Türleri", "Akışkanlar", "Basınç","Sıvılarda Basınç","Açık Hava Basıncı","Kaldırma Kuvveti","Bernoulli İlkesi", "Enerji", "İç Enerji, Isı ve Sıcaklık Arasındaki İlişki","Isı, Öz Isı, Isı Sığası ve Sıcaklık Farkı Arasındaki İlişki","Hâl Değişimi","Isıl Denge","Isı Aktarım Yolları","Isı İletim Hızı"
+                ],
+
+                "Kimya": [
+                   "Kimya Hayattır", "Günlük Hayatta Kimya, Kimyasal Maddeler ve Kariyer Olanakları", "Atomdan Periyodik Tabloya", "Atom Teorileri ve Atomun Yapısı","Atom Orbitalleri ve Elektron Dizilimi","Periyodik Tabloda Yer Bulma","Periyodik Özellikler", "Etkileşimler", "Metalik Bağ","İyonik Bağ","Kovalent Bağ","Lewis Nokta Yapısı","Molekül Polarlığı ve Apolarlığı","Bileşiklerin Adlandırılması", "Etkileşimden Maddeye", "Moleküller Arası Etkileşimler","Katılar ve Özellikleri","Sıvılar ve Özellikleri", "Nanoparçacıklar ve Ekolojik Sürdürülebilirlik"
+                ],
+
+                "Biyoloji": [
+                   "Biyolojinin Önemi ve Gelişimi","Bilimin Doğası ve Araştırma Süreçleri","Bilim Etiği","Canlıların Ortak Özellikleri","Canlıların Çeşitliliği ve Sınıflandırılması","Üç Üst Alem ve Canlıların Özellikleri","Biyoçeşitlilik","İnorganik Moleküller","Organik Moleküller","Hücre","Hücre Zarından Madde Geçişleri","Hücreden Doku, Organ ve Sistemlerin Organizasyonu"
+                ],
+
+                "Tarih": [
+                  "Geçmişin İnşa Sürecinde Tarih", "Tarih Öğrenmenin Faydaları","Tarihin Doğası","Tarihsel Bilginin Üretim Süreci","Tarih Araştırma ve Yazımında Dijitalleşme", "Eski Çağ Medeniyetleri", "Tarım Devrimi ve Eski Çağ Medeniyetlerine Etkisi","Eski Çağ Medeniyetlerinde Yönetim ve Ordu","Eski Çağ Medeniyetlerinde Hukuk","Eski Çağ’da İnançlar ile Bilim ve Sanat Anlayışları","Türklerde Konargöçer Yaşam", "Orta Çağ Medeniyetleri", "Orta Çağ’da Yaşanan Kitlesel Göçler","Orta Çağ’da Yönetim ve Ordu Yapıları","Orta Çağ’daki Ticaret Yolları","Orta Çağ Medeniyetlerinde Bilim, Kültür ve Sanat"
+                ],
+
+                "Coğrafya": [
+                 "Coğrafyanın Doğası", "Coğrafya Biliminin Konusu ve Bölümleri","Niçin Coğrafya Öğrenmeliyiz?","Coğrafya Biliminin Gelişimi", "Mekansal Bilgi Teknolojileri", "Mekânın Aynası Haritalar","Türkiye’nin Coğrafi Konumu","Mekânsal Bilgi Teknolojilerinin Bileşenleri", "Doğal Sistemler ve Süreçler", "Hava Olayları ve Günlük Hayata Etkileri","İklim Sisteminin Bileşen ve Değişkenleri","İklim Türleri","İklim Sisteminde Yaşanan Değişiklikler", "Beşeri Sistemler ve Süreçler",  "Nüfusun Tarihsel Değişimi ve Geleceği","Nüfusun Dağılışı ve Hareketleri","Demografik Dönüşüm ve Nüfus Piramitleri","Nüfusla İlgili Fırsat, Sorun ve Politikalar","Ekonomik Faaliyetleri Etkileyen Coğrafi Faktörler", "Afetler ve Sürdürülebilir Çevre",  "Tehlike, Risk ve Afet","Afet Türleri","Bütüncül Afet Yönetimi","Bölge ve Bölge Sınırı"
+                ],
+
+                "Türk Dili ve Edebiyatı": [
+                    "Sözün İnceliği","Anlam Arayışı","Anlamın Yapı Taşları","Dilin Zenginliği","Cümlede Anlam","Sözcükte Anlam","Paragrafta Anlam","Dil Bilgisi","Yazım Kuralları","Noktalama İşaretleri"
+                ],
+
+
+                "Din Kültürü ve Ahlak Bilgisi": [
+                   "Allah-İnsan İlişkisi","İslam’da İnanç Esasları","İslam’da İbadetler","İslam’da Ahlak İlkeleri","Kur’an’a Göre Hz. Muhammed"
+                ],
+
+                "İngilizce": [
+                    "School Life",
+"Classroom Life", "Personal Life: Physical Appearance & Personality","Family Life", "Life in The House & Neighbourhood",
+"Life in The City & Country", "Personal Life: Physical Appearance & Personality", "Family Life", "Life in The House & Neighbourhood","Life in The City & Country", "Life in The World & Nature", "Life in The Universe & Future"
+
+                ],
+                "Almanca": [
+                    "Informationen zur Person",
+                    "Die Schule",
+                    "Meine Familie",
+                    "Tägliches Leben"
+                ]
+            },
+                        "10":             {
+                "Türk Dili ve Edebiyatı": [
+                    "Dil Bilgisi",
+"Yazım Kuralları",
+"Noktalama İşaretleri",
+"Sözün Ezgisi",
+"Kelimelerin Ritmi",
+"Dünden Bugüne",
+"Nesillerin Mirası",
+"Sözcükte Anlam",
+"Cümlede Anlam",
+"Paragrafta Anlam",
+
+                ],
+                "Matematik": [
+                   "Sayılar", "Asal Çarpanlar ve Bölenler", "Ebob, Ekok ve Bölünebilme",
+"Nicelikler ve Değişimler", "Karesel, Kareköklü ve Rasyonel Fonksiyonlar",
+"İstatistiksel Araştırma Süreci", "İki Kategorik Değişkenle İstatistiksel Analiz",
+"Sayma, Algoritma ve Bilişim", "Sayma Stratejileri", "Cebirsel ve Fonksiyonel İşlemlerin Algoritmik Yapısı",
+"Analitik İnceleme", "Analitik Geometri",
+"Veriden Olasılığa", "Koşullu Olasılık", "Bağımlı ve Bağımsız Olaylar, Bayes Teoremi",
+"Geometrik Şekiller", "Dik Üçgen ve Trigonometri", "Üçgende Yardımcı Elemanlar", "Üçgende Alan, Sinüs ve Kosinüs Teoremleri"
+
+                ],
+                "Fizik": [
+                    "Kuvvet ve Hareket", "Sabit Hızlı Hareket", "Bir Boyutta Sabit İvmeli Hareket", "Serbest Düşme", "İki Boyutta Sabit İvmeli Hareket",
+"Enerji", "İş, Enerji ve Güç", "Enerji Biçimleri", "Mekanik Enerji", "Enerji Kaynakları",
+"Elektrik", "Basit Elektrik Devreleri", "Elektrik Akımı", "Ohm Yasası", "Dirençlerin Bağlanması", "Üreteçlerin Bağlanması", "Elektrik Akımının Oluşturabileceği Tehlikelere Karşı Alınması Gereken Önlemler",
+"Dalgalar", "Dalgaların Temel Kavramları", "Dalgaların Sınıflandırılması", "Dalgaların Yayılma Süratini Etkileyen Etmenler", "Periyodik Hareketler", "Su Dalgalarında Yansıma ve Kırılma", "Rezonans ve Deprem"
+
+                ],
+                "Kimya": [
+                  "Kimyasal Tepkimeler",
+"Kimyasal Tepkimelerin Oluşumu",
+"Kimyasal Tepkime Türleri",
+"Mol Kavramı",
+"Kimyasal Tepkime Denklemlerinin Denkleştirilmesi",
+"Kimyasal Hesaplamalar",
+
+"Gazlar",
+"Gaz Yasaları, Özellikleri ve Kinetik Teorisi",
+"İdeal Gaz Yasası",
+"Graham Difüzyon ve Efüzyon Yasası",
+
+"Çözeltiler",
+"Çözünme Süreci",
+"Maddelerin Birbiri İçindeki Çözünebilirliği",
+"Çözünme Olayının Sınıflandırılması",
+"Derişim Birimleri",
+"Çözünürlük",
+"Çözünürlüğe Etki Eden Faktörler",
+"Çözeltilerin Sınıflandırılması",
+
+"Yeşil Kimya, Çevresel ve Ekolojik Sürdürülebilirlik",
+"Makro ve Mikro Ölçekli Deneyler",
+"Atmosferdeki Tepkimeler ve Küresel Sorunlar"
+
+                ],
+                "Biyoloji": [
+                    "Güneşten Besinlere",
+"Canlılık için Enerjinin Önemi",
+"ATP’nin Yapısı ve Fotosentez",
+"Kemosentez",
+
+"Besinlerden Enerjiye",
+"Sindirim ve Sindirim Yapıları",
+"İnsanda Sindirim",
+"Hücresel Solunum",
+"Besinlerin Solunuma Katılma Yolları",
+"Fermantasyon",
+"Enerji-metabolizma İlişkisi",
+
+"Ekosistemler",
+"Ekosistemin Bileşenleri",
+"Komünite ve Popülasyon Ekolojisi",
+"Ekosistem Ekolojisi",
+"Madde Döngüleri",
+
+"Ekolojik Sürdürülebilirlik",
+"Ekolojik Sürdürülebilirliğin Önemi",
+"Ekolojik Sürdürülebilirlik",
+"Ekolojik Ayak İzinin Küçültülmesi",
+"Doğal Kaynakların ve Biyoçeşitliliğin Korunması",
+"Atık Yönetimi",
+
+                ],
+                "Coğrafya": [
+                    "Coğrafyanın Doğası",
+"Coğrafi Bakış",
+
+"Mekânsal Bilgi Teknolojileri",
+"CBS ve Uzaktan Algılamanın Uygulama Alanları",
+"Mekânsal Verilerin Haritalara Aktarılması",
+
+"Doğal Sistemler ve Süreçler",
+"Tektonik Süreçler",
+"İklim ve Kayaç Yapısının Aşınma ve Çözünme Süreçlerine Etkisi",
+"Aşınım ve Birikim Süreçlerinin Yeryüzü Şekillerinin Oluşumuna Etkisi",
+"Yeryüzü Şekilleri ile İlgili Gözlem ve Saha Çalışması",
+"Yeryüzü Şekilleri ile Beşeri Faaliyetler Arasındaki Etkileşim",
+
+"Beşeri Sistemler ve Süreçler",
+"Yerleşmelerin Kuruluşu ve Gelişimi",
+"Yerleşmelerin Fonksiyonları",
+
+"Ekonomik Faaliyetler ve Etkileri",
+"Ekonomik Faaliyetlerin Özellikleri",
+"Ekonomik Sektörler ve Gelişmişlik",
+"Türkiye Ekonomisinin Sektörel Dağılımı",
+
+"Afetler ve Sürdürülebilir Çevre",
+"Afetlerle Mücadelede İyi Uygulama Örnekleri",
+"Afetlere Karşı Dirençli Yaşam Alanları",
+"Afetlerden Korunma",
+"Afet Bilinci",
+
+"Bölgeler, Ülkeler ve Küresel Bağlantılar",
+"Türk Kültürünün Mekânsal Özellikleri",
+
+                ],
+                "Tarih": [
+                    "Tarih – Türkistan’dan Türkiye’ye (1040-1299)",
+"Önemli Askeri Mücadeleler",
+"Türk Devlet ve Ordu Teşkilatındaki Değişim",
+"Türklerin Sosyal ve Ekonomik Yaşamı",
+"Türk-İslam Medeniyetinin Bilim, Kültür ve Sanat Etkileri",
+
+"Tarih – Beylikten Devlete Osmanlı (1299-1453)",
+"Osmanlı Devleti’nin Kuruluşuna Dair Farklı Görüşler",
+"Osmanlı’nın Anadolu ve Rumeli Mücadeleleri",
+"Devletleşme Sürecinde Ordu, Hukuk ve Toprak Sistemleri",
+"Fetih Sonrası Osmanlı Politikaları",
+"Osmanlı İlim ve İrfan Geleneği",
+
+"Tarih – Cihan Devleti Osmanlı (1453-1683)",
+"1453-1683 Yılları Arasındaki Siyasi ve Askerî Mücadeleler",
+"Yönetim ve Ordu Yapısında Meydana Gelen Değişimler",
+"Avrupa’nın Sömürgeci Politikalarının Etkileri",
+"Osmanlı Devleti’ndeki Önemli İsyanların Neden ve Sonuçları",
+"Osmanlı’da Bilim, Kültür ve Sanat Gelişmeleri",
+                ],
+                "Din Kültürü ve Ahlak Bilgisi": [
+                    "İslam’da Varlık ve Bilgi",
+"Allah’ı Tanımak",
+"Din, Çevre ve Teknoloji",
+"İslam’ın Evrensel Mesajları",
+"İslam Düşüncesinde İtikadi-Siyasi ve Fıkhi Yorumlar",
+
+                ],
+                "Felsefe": [
+                   "Felsefenin Doğası",
+"Felsefe, Mantık ve Argümantasyon",
+"Varlık Felsefesi",
+"Bilgi Felsefesi",
+"Ahlak Felsefesi",
+"Estetik ve Sanat Felsefesi",
+"Siyaset Felsefesi",
+"Din Felsefesi",
+"Bilim Felsefesi"
+                ],
+                "İngilizce": [                 
+"School Life & Education",
+"Classroom Life & Learning",
+"Personal Life & Well-being",
+"Family Life & Home",
+"Life in The Neighbourhood, City & Social Life",
+"Life in The World & Culture",
+"Life in Nature & Global Problems",
+"Life in The Universe & Future"
+
+                ],
+                "Almanca": [
+                    "Essen und Trinken",
+                    "Besondere Tage",
+                    "Freizeitaktivitäten",
+                    "Einkaufen"
+                ],
+                "Astronomi ve Uzay Bilimleri": [
+                    "Astronominin Tanımı ve Gelişimi",
+                    "Evreni Tanıyalım",
+                    "Gök Cisimleri ve Hareketleri",
+                    "Ay ve Güneş’in Görünür Hareketleri",
+                    "Zaman ve Takvim",
+                    "Uzay Bilimleri ve Uzay Çalışmaları"
+                ]
+            },
+            "11":             {
+                "Matematik": [
+                    "Trigonometri",
+                    "Yönlü Açılar",
+                    "Yönlü Açı",
+                    "Açı Ölçü Birimleri",
+                    "Trigonometrik Fonksiyonlar",
+                    "Trigonometrik Fonksiyonların Birim Çember Yardımıyla Açıklanması",
+                    "Kosinüs Teoremi",
+                    "Sinüs Teoremi",
+                    "Trigonometrik Fonksiyonların Grafikleri",
+                    "Analitik Geometri",
+                    "Doğrunun Analitik İncelenmesi",
+                    "Analitik Düzlemde İki Nokta Arasındaki Uzaklık",
+                    "Doğru Parçasını Belli Bir Oranda Bölen Noktanın Koordinatları",
+                    "Analitik Düzlemde Doğrular",
+                    "Fonksiyonlarda Uygulamalar",
+                    "Fonksiyonlarla İlgili Uygulamalar",
+                    "İkinci Dereceden Fonksiyonlar ve Grafikleri",
+                    "Fonksiyonların Dönüşümleri",
+                    "Denklem ve Eşitsizlik Sistemleri",
+                    "İkinci Dereceden İki Bilinmeyenli Denklem Sistemleri",
+                    "İkinci Dereceden Bir Bilinmeyenli Eşitsizlikler ve Eşitsizlik Sistemleri",
+                    "Çember ve Daire",
+                    "Çemberin Temel Elemanları",
+                    "Çemberde Açılar",
+                    "Çemberde Teğet",
+                    "Dairenin Çevresi ve Alanı",
+                    "Uzay Geometri",
+                    "Katı Cisimler",
+                    "Olasılık",
+                    "Koşullu Olasılık",
+                    "Deneysel ve Teorik Olasılık"
+                ],
+                "Fizik": [
+                    "Kuvvet ve Hareket",
+                    "Vektörler",
+                    "Bağıl Hareket",
+                    "Newton’ın Hareket Yasaları",
+                    "Hareket",
+                    "Bir Boyutta Sabit İvmeli Hareket",
+                    "Sabit İvmeli Hareket",
+                    "Serbest Düşme",
+                    "Limit Hız",
+                    "Düşey Doğrultuda Atış Hareketi",
+                    "İki Boyutta Hareket",
+                    "Yatay Atış Hareketi",
+                    "Düşey Atış Hareketi",
+                    "Enerji ve Hareket",
+                    "İtme ve Çizgisel Momentum",
+                    "İtme",
+                    "Çizgisel Momentum",
+                    "Çizgisel Momentumun Korunumu",
+                    "Çarpışmalar ve Çizgisel Momentumun Korunumu",
+                    "Denge",
+                    "Tork",
+                    "Denge ve Denge Şartları",
+                    "Cisimlerin Denge Şartı",
+                    "Ağırlık Merkezi ve Kütle Merkezi",
+                    "Basit Makineler",
+                    "Basit Makineler",
+                    "Elektrik ve Manyetizma",
+                    "Elektriksel Kuvvet ve Elektrik Alan",
+                    "Elektriksel Potansiyel",
+                    "Düzgün Elektrik Alan ve Sığa",
+                    "Manyetizma ve Elektromanyetik İndüklenme",
+                    "Alternatif Akım",
+                    "Transformatörler"
+                ],
+                "Kimya": [
+                    "Modern Atom Teorisi",
+                    "Atomun Kuantum Modeli",
+                    "Periyodik Sistem ve Elektron Dizilimleri",
+                    "Periyodik Özellikler",
+                    "Elementleri Tanıyalım",
+                    "Yükseltgenme Basamakları",
+                    "Gazlar",
+                    "Gazların Özellikleri ve Gaz Yasaları",
+                    "İdeal Gaz Yasası",
+                    "Gazlarda Kinetik Teori",
+                    "Gaz Karışımları",
+                    "Gerçek Gazlar",
+                    "Sıvı Çözeltiler ve Çözünürlük",
+                    "Çözücü–Çözünen Etkileşimleri",
+                    "Derişim Birimleri",
+                    "Koligatif Özellikler",
+                    "Çözünürlük",
+                    "Çözünürlüğe Etki Eden Faktörler",
+                    "Kimyasal Tepkimelerde Enerji",
+                    "Tepkimelerde Isı Değişimi",
+                    "Oluşum Entalpisi",
+                    "Bağ Enerjileri",
+                    "Tepkime Isılarının Toplanabilirliği",
+                    "Kimyasal Tepkimelerde Hız",
+                    "Tepkime Hızları",
+                    "Tepkime Hızını Etkileyen Faktörler",
+                    "Kimyasal Tepkimelerde Denge",
+                    "Kimyasal Denge",
+                    "Dengeyi Etkileyen Faktörler",
+                    "Sulu Çözelti Dengeleri"
+                ],
+                "Biyoloji": [
+                    "Denetleyici ve Düzenleyici Sistem, Duyu Organları",
+                    "Sinir Sisteminin Yapısı, Görevi ve İşleyişi",
+                    "Endokrin Bezler ve Salgıladıkları Hormonlar",
+                    "Sinir Sistemi Rahatsızlıkları",
+                    "Sinir Sisteminin Sağlıklı Yapısının Korunması",
+                    "Duyu Organlarının Yapısı ve İşleyişi",
+                    "Duyu Organları Rahatsızlıkları",
+                    "Duyu Organlarının Sağlıklı Yapısının Korunması",
+                    "Destek ve Hareket Sistemi",
+                    "Destek ve Hareket Sisteminin Yapısı, Görevi ve İşleyişi",
+                    "Destek ve Hareket Sistemi Rahatsızlıkları",
+                    "1Destek ve Hareket Sisteminin Sağlıklı Yapısının Korunması",
+                    "Sindirim Sistemi",
+                    "Sindirim Sisteminin Yapısı, Görevi ve İşleyişi",
+                    "Sindirim Sistemi Rahatsızlıkları",
+                    "Sindirim Sisteminin Sağlıklı Yapısının Korunması",
+                    "Dolaşım Sistemleri",
+                    "Kalbin, Damarların ve Kanın Yapısı, Görevi ve İşleyişi",
+                    "Lenf Dolaşımı",
+                    "Dolaşım Sistemi Rahatsızlıkları",
+                    "Dolaşım Sisteminin Sağlıklı Yapısının Korunması",
+                    "Bağışıklık Çeşitleri ve Vücudun Doğal Savunma Mekanizmaları",
+                    "Solunum Sistemi",
+                    "Solunum Sisteminin Yapısı, Görevi ve İşleyişi",
+                    "Alveollerden Dokulara ve Dokulardan Alveollere Gaz Taşınması",
+                    "Solunum Sistemi Hastalıkları",
+                    "Solunum Sisteminin Sağlıklı Yapısının Korunması",
+                    "Üriner Sistem",
+                    "Üriner Sistemin Yapısı, Görevi ve İşleyişi",
+                    "Homeostasinin Sağlanmasında Böbreklerin Rolü",
+                    "Üriner Sistem Rahatsızlıkları",
+                    "Üriner Sistemin Sağlıklı Yapısının Korunması",
+                    "Üreme Sistemi ve Embriyonik Gelişim",
+                    "Üreme Sisteminin Yapısı, Görevi ve İşleyişi",
+                    "Üreme Sisteminin Sağlıklı Yapısının Korunması",
+                    "İnsanda Embriyonik Gelişim Süreci",
+                    "Komünite ve Popülasyon Ekolojisi",
+                    "Komünite Ekolojisi",
+                    "Komünitenin Yapısına Etki Eden Faktörler",
+                    "Komünitede Tür İçi ve Türler Arasındaki Rekabet",
+                    "Komünitede Türler Arasında Simbiyotik İlişkiler",
+                    "Komünitelerdeki Süksesyon",
+                    "Popülasyon Ekolojisi",
+                    "Popülasyon Dinamiğine Etki Eden Faktörler"
+                ],
+                "Tarih": [
+                    "Değişen Dünya Dengeleri Karşısında Osmanlı Siyaseti",
+                    "1595–1700 Yılları Arasındaki Siyasi Gelişmeler",
+                    "XVII. Yüzyılda Değişen Siyasi Rekabet İçerisindeki Osmanlı Devleti Politikaları",
+                    "Avrupalı Güçlerin Değişen Denizcilik Stratejileri ve Etkileri",
+                    "1700–1774 Yılları Osmanlı Devletinin Yürüttüğü Rekabet",
+                    "Değişim Çağında Avrupa ve Osmanlı",
+                    "Avrupa’da Değişim Çağı",
+                    "Osmanlı Devleti’nde Değişim",
+                    "Osmanlı Devleti’nde İsyanlar ve Düzeni Koruma Çabaları",
+                    "Devrimler Çağında Değişen Devlet–Toplum İlişkileri",
+                    "İhtilaller Çağı",
+                    "Sanayi İnkılabı Sonrası Sömürgecilik Faaliyetleri ve Küresel Etkileri",
+                    "Osmanlı Devleti’nde Modern Orduya Geçiş",
+                    "Ulus Devletleşme ve Endüstriyelleşme Süreçlerinin Sosyal Yaşama Etkisi",
+                    "Uluslararası İlişkilerde Denge Stratejisi (1774–1914)",
+                    "XVIII–XX. Yüzyıl Siyasi Gelişmeler (1774–1914)",
+                    "Osmanlı Devleti’nin Siyasi Varlığına Yönelik İç ve Dış Tehditler",
+                    "Tanzimat Fermanı, Islahat Fermanı ve Kanun’ı Esasi’nin İçeriklerini Küresel ve Yerel Siyasi Şartlar Bağlamında Değerlendirme",
+                    "1876–1913 Arasında Gerçekleştirilen Darbelerin Osmanlı Siyasi Hayatına Etkisi",
+                    "XIX. ve XX. Yüzyılda Değişen Gündelik Hayat",
+                    "Osmanlı Devleti’nin Endüstriyel Üretime Geçiş Çabaları ve Yaşanan Zorluklar",
+                    "Osmanlı Devleti’nin Nüfus Hareketlerinin Sebep ve Sonuçlar",
+                    "Modernleşmeyle Birlikte Yaşanan Değişim ve Dönüşümler"
+                ],
+                "Coğrafya": [
+                    "DOĞAL SİSTEMLER",
+                    "Ekosistemlerin Özellikleri ve İşleyişi",
+                    "Biyoçeşitlilik",
+                    "Ekosistemlerin Unsurları",
+                    "Enerji Akışı ve Madde Döngüleri",
+                    "Su Ekosistemleri",
+                    "BEŞERİ SİSTEMLER",
+                    "Nüfus Politikaları",
+                    "Ülkelerin Nüfus Politikaları",
+                    "Türkiye’de Nüfus Politikaları ve Bu Politikaların Etkileri",
+                    "Türkiye’nin Nüfus Projeksiyonlarına Dayalı Senaryolar",
+                    "Yerleşmelerin Özellikleri",
+                    "Şehirlerin Fonksiyonları ve Değişimi",
+                    "Şehirlerin Etki Alanları",
+                    "Türkiye’de Yerleşmeler",
+                    "Ekonomik Faaliyetler ve Doğal Kaynaklar",
+                    "Üretim, Dağıtım ve Tüketimi Etkileyen Faktörler",
+                    "Üretim, Dağıtım ve Tüketim Sektörlerinin Ekonomiye Etkileri",
+                    "Doğal Kaynaklar ve Ekonomi",
+                    "Türkiye’de Ekonomi",
+                    "Türkiye’deki Doğal Kaynaklar ile Ekonomi Arasındaki İlişki",
+                    "Türkiye’nin Ekonomi Politikaları ve Mekansal Etkileri",
+                    "Türkiye Ekonomisinin Sektörel Dağılımı",
+                    "Türkiye’de Tarım",
+                    "Türkiye’de Madenler ve Enerji Kaynakları",
+                    "Türkiye’de Sanayi",
+                    "KÜRESEL ORTAM: BÖLGELER VE ÜLKELER",
+                    "Kültür Bölgeleri",
+                    "İlk Kültür Merkezleri",
+                    "Kültür Bölgelerinin Oluşumu ve Dağılışı",
+                    "Türk Kültürü",
+                    "Anadolu’nun Kültürel Özellikleri",
+                    "Küreselleşen Dünya",
+                    "Küresel Ticaret",
+                    "Turizm",
+                    "Sanayileşme Süreci: Almanya",
+                    "Tarım–Ekonomi İlişkisi",
+                    "Uluslararası Örgütler",
+                    "ÇEVRE VE TOPLUM",
+                    "Çevre Sorunları",
+                    "Çevre Sorunları ve Türleri",
+                    "Madenler ve Enerji Kaynaklarına Ait Kullanımın Çevresel Etkileri",
+                    "Doğal Kaynak Kullanımının Çevresel Etkileri",
+                    "Arazi Kullanımının Çevresel Etkileri",
+                    "Küresel Çevre Sorunları",
+                    "Doğal Kaynakların Sürdürülebilir Kullanımı"
+                ]
             }
         };
 
@@ -265,8 +731,29 @@
 
         function toggleExam(type) {
             currentExamMode = type;
-            document.getElementById('subTYT').className = type === 'TYT' ? 'flex-1 py-2 rounded-lg bg-blue-600 text-white text-[10px] font-bold' : 'flex-1 py-2 rounded-lg bg-slate-200 text-slate-600 text-[10px] font-bold';
-            document.getElementById('subAYT').className = type === 'AYT' ? 'flex-1 py-2 rounded-lg bg-red-600 text-white text-[10px] font-bold' : 'flex-1 py-2 rounded-lg bg-slate-200 text-slate-600 text-[10px] font-bold';
+
+            // Tüm mod butonlarını pasifleştir
+            const ids = ['subTYT', 'subAYT', 'sub9', 'sub10', 'sub11'];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                el.className = 'flex-1 py-2 rounded-lg bg-slate-200 text-slate-600 text-[10px] font-bold';
+            });
+
+            // Aktif olanı seç
+            const activeId =
+                type === 'TYT' ? 'subTYT' :
+                type === 'AYT' ? 'subAYT' :
+                type === '9' ? 'sub9' :
+                type === '10' ? 'sub10' : 'sub11';
+
+            const activeEl = document.getElementById(activeId);
+            if (activeEl) {
+                if (type === 'TYT') activeEl.className = 'flex-1 py-2 rounded-lg bg-blue-600 text-white text-[10px] font-bold';
+                else if (type === 'AYT') activeEl.className = 'flex-1 py-2 rounded-lg bg-red-600 text-white text-[10px] font-bold';
+                else activeEl.className = 'flex-1 py-2 rounded-lg bg-emerald-600 text-white text-[10px] font-bold';
+            }
+
             updateDersOptions();
         }
 
@@ -338,9 +825,21 @@
             const table = document.getElementById('outTable'); table.innerHTML = "";
             allRows.forEach(r => {
                 const tr = document.createElement('tr');
-                const badge = r.exam === 'TYT' ? 'badge-tyt' : 'badge-ayt';
+                const badge =
+                    (r.exam === 'TYT') ? 'badge-tyt' :
+                    (r.exam === 'AYT') ? 'badge-ayt' :
+                    (r.exam === '9') ? 'badge-9' :
+                    (r.exam === '10') ? 'badge-10' :
+                    (r.exam === '11') ? 'badge-11' :
+                    'badge-grade';
+                const examLabel =
+                    (r.exam === '9') ? '9. Sınıf' :
+                    (r.exam === '10') ? '10. Sınıf' :
+                    (r.exam === '11') ? '11. Sınıf' :
+                    r.exam;
+
                 tr.innerHTML = `
-                    <td><div class="font-bold text-[10px]">${DERS_IKONLARI[r.ders] || ""} ${r.ders}</div><span class="${badge} mt-1">${r.exam}</span></td>
+                    <td><div class="font-bold text-[10px]">${DERS_IKONLARI[r.ders] || ""} ${r.ders}</div><span class="${badge} mt-1">${examLabel}</span></td>
                     <td class="font-semibold text-slate-700 text-[10px]">${r.konu}</td>
                     <td class="text-slate-500 italic text-[10px]">${r.kaynak}</td>
                     <td class="no-print-item text-center"><button onclick="deleteRow(${r.id})" class="text-red-400 hover:text-red-600">✕</button></td>
