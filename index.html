@@ -74,7 +74,21 @@
         .task-area{ display:flex; flex-direction:column-reverse; gap:0.5rem; }
         .task-area.task-two-col{ display:grid; grid-template-columns: 1fr 1fr; gap:0.75rem; }
         .task-col{ display:flex; flex-direction:column-reverse; gap:0.5rem; }
-    </style>
+    
+.drag-item{ cursor: grab; }
+.drag-item:active{ cursor: grabbing; opacity:.6; }
+
+.day-drop{ min-height:60px; }
+.day-drop.drag-over{ outline:2px dashed #2563eb; background:#eff6ff; }
+
+.mini-tick{
+    font-size:10px;
+    margin-left:6px;
+    color:#16a34a;
+    font-weight:900;
+}
+
+</style>
 </head>
 <body class="py-10 px-4" id="mainBody">
 
@@ -819,7 +833,13 @@
             document.getElementById('outDate').innerText = new Date().toLocaleDateString('tr-TR');
 
             ['pazartesi', 'sali', 'carsamba', 'persembe', 'cuma', 'cumartesi', 'pazar'].forEach(gun => { 
-                document.getElementById('cell-' + gun).innerText = document.getElementById(gun).value; 
+                
+                const cell = document.getElementById('cell-' + gun);
+                const val = document.getElementById(gun).value;
+                if(val && !cell.dataset.dropped){
+                    cell.innerText = val;
+                }
+ 
             });
 
             const table = document.getElementById('outTable'); table.innerHTML = "";
@@ -840,12 +860,29 @@
 
                 tr.innerHTML = `
                     <td><div class="font-bold text-[10px]">${DERS_IKONLARI[r.ders] || ""} ${r.ders}</div><span class="${badge} mt-1">${examLabel}</span></td>
-                    <td class="font-semibold text-slate-700 text-[10px]">${r.konu}</td>
+                    <td class="font-semibold text-slate-700 text-[10px] konu-adi" draggable="true">${r.konu}</td>
                     <td class="text-slate-500 italic text-[10px]">${r.kaynak}</td>
                     <td class="no-print-item text-center"><button onclick="deleteRow(${r.id})" class="text-red-400 hover:text-red-600">✕</button></td>
                 `;
                 table.appendChild(tr);
             });
+            // draggable konu items
+            document.querySelectorAll('.konu-adi').forEach(el=>{
+                if(!el.dataset.dragInit){
+                    el.dataset.dragInit = "1";
+                    el.classList.add('drag-item');
+                    el.addEventListener('dragstart', e=>{
+                        
+                        const row = el.closest('tr');
+                        const konu = row.querySelector('.konu-adi')?.childNodes[0]?.nodeValue?.trim() || '';
+                        const kaynak = row.children[2]?.innerText?.trim() || '';
+                        const full = kaynak && kaynak !== '-' ? konu + " (" + kaynak + ")" : konu;
+                        e.dataTransfer.setData("text/plain", full);
+
+                    });
+                }
+            });
+
 
 
             // Kolon genişliğini içerik uzunluğuna göre akıllı ayarla
@@ -923,6 +960,94 @@ document.getElementById('viewTrack').style.display = (previewMode === 'PLAN') ? 
             document.getElementById('previewPill').innerText = (previewMode === 'BOTH') ? 'Hepsi' : (previewMode === 'TRACK' ? 'Takip' : 'Plan');
         }
 
+        
+        function markAsUsed(text){
+            document.querySelectorAll(".konu-adi").forEach(el=>{
+                if(el.innerText.trim() === text.trim()){
+                    if(!el.querySelector(".mini-tick")){
+                        const tick = document.createElement("span");
+                        tick.className="mini-tick no-print-item";
+                        tick.innerText="✓";
+                        el.appendChild(tick);
+                    }
+                }
+            });
+        }
+
+        
+        
+        function renderCell(cell){
+            const lines = cell.innerText.split("\n").filter(Boolean);
+            cell.innerHTML = "";
+            lines.forEach(t=>{
+                const div = document.createElement("div");
+                div.className = "plan-item";
+                div.style.cursor = "pointer";
+                div.innerText = t;
+                div.onclick = ()=>{
+                    div.remove();
+                    savePlanMemory();
+                    runSmartWarnings();
+                };
+                cell.appendChild(div);
+            });
+        }
+
+        function renderAllCells(){
+            const gunler = ["pazartesi","sali","carsamba","persembe","cuma","cumartesi","pazar"];
+            gunler.forEach(g=>{
+                const cell = document.getElementById("cell-"+g);
+                if(cell) renderCell(cell);
+            });
+        }
+
+        function savePlanMemory(){
+            const gunler = ["pazartesi","sali","carsamba","persembe","cuma","cumartesi","pazar"];
+            const mem = {};
+            gunler.forEach(g=>{
+                mem[g] = document.getElementById("cell-"+g)?.innerText || "";
+            });
+            localStorage.setItem("planMemory", JSON.stringify(mem));
+        }
+
+        function loadPlanMemory(){
+            const raw = localStorage.getItem("planMemory");
+            if(!raw) return;
+            const mem = JSON.parse(raw);
+            Object.keys(mem).forEach(g=>{
+                const cell = document.getElementById("cell-"+g);
+                if(cell && mem[g]){
+                    cell.innerText = mem[g];
+                    cell.dataset.dropped = "1";
+                    renderCell(cell);
+                }
+            });
+        }
+
+        
+        function runSmartWarnings(){
+            const gunler = ["pazartesi","sali","carsamba","persembe","cuma","cumartesi","pazar"];
+            let msg = [];
+            let total = 0;
+
+            gunler.forEach(g=>{
+                const cell = document.getElementById("cell-"+g);
+                const count = cell ? cell.querySelectorAll('.plan-item').length : 0;
+                total += count;
+                if(count === 0) msg.push("• " + g + " boş.");
+                if(count > 8) msg.push("• " + g + " aşırı yoğun.");
+            });
+
+            if(total < 10) msg.push("• Haftalık tempo çok düşük.");
+            if(total > 60) msg.push("• Bu yük sürdürülebilir görünmüyor.");
+
+            // yetişmez kaba tahmin
+            if(total > 45) msg.push("• Bu hızla bitirme zor.");
+
+            const box = document.getElementById("smartContent");
+            if(box) box.innerText = msg.join("\n");
+        }
+
         function downloadPDF() {
             const student = document.getElementById('inStudent').value || "Program";
             const element = document.getElementById('pdf-render-area');
@@ -942,7 +1067,41 @@ document.getElementById('viewTrack').style.display = (previewMode === 'PLAN') ? 
             });
         }
 
-        window.onload = () => { toggleExam('TYT'); updatePreview(); };
+        window.onload = () => { toggleExam('TYT'); updatePreview(); loadPlanMemory(); renderAllCells(); runSmartWarnings();
+            const gunler = ["pazartesi","sali","carsamba","persembe","cuma","cumartesi","pazar"];
+            gunler.forEach(g=>{
+                const cell = document.getElementById("cell-"+g);
+                if(!cell) return;
+                cell.classList.add("day-drop");
+
+                cell.addEventListener("dragover", e=>{
+                    e.preventDefault();
+                    cell.classList.add("drag-over");
+                });
+
+                cell.addEventListener("dragleave", ()=> cell.classList.remove("drag-over"));
+
+                cell.addEventListener("drop", e=>{
+                    e.preventDefault();
+                    cell.classList.remove("drag-over");
+                    const data = e.dataTransfer.getData("text/plain");
+                    
+                    cell.innerText += (cell.innerText ? "\n" : "") + data;
+                    cell.dataset.dropped = "1";
+                    markAsUsed(data);
+                    savePlanMemory();
+                    renderCell(cell);
+                    runSmartWarnings();
+
+                });
+            });
+ };
     </script>
+
+    <div id="smartPanel" style="position:fixed;bottom:10px;right:10px;width:260px;background:#0f172a;color:white;padding:10px;border-radius:12px;font-size:12px;z-index:9999">
+        <div style="font-weight:bold;margin-bottom:6px">Akıllı Program Asistanı</div>
+        <div id="smartContent" style="white-space:pre-line;font-size:11px"></div>
+    </div>
+
 </body>
 </html>
